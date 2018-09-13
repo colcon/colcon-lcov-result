@@ -1,4 +1,4 @@
-colcon-coverage-result
+colcon-lcov-result
 ==================
 
 An extension for `colcon-core <https://github.com/colcon/colcon-core>`_ to provide aggregate

@@ -20,7 +20,7 @@ from colcon_core.verb import VerbExtensionPoint
 logger = colcon_logger.getChild(__name__)
 
 
-class CoverageResultVerb(VerbExtensionPoint):
+class LcovResultVerb(VerbExtensionPoint):
     """
     Collect the lcov results generated from running tests
     """
@@ -67,7 +67,7 @@ class CoverageResultVerb(VerbExtensionPoint):
             base_path = context.args.base_paths[0]
             if len(context.args.base_paths) > 1:
                 # TODO(jpsamper) Use logger
-                print('WARNING: colcon coverage-result only supports one base path. '
+                print('WARNING: colcon lcov-result only supports one base path. '
                       'Using only the first element in the list: [{}]'.format(base_path))
         else:
             base_path = context.args.base_paths
