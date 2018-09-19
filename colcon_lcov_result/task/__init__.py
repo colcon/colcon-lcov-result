@@ -7,8 +7,11 @@ import shutil
 from colcon_core.environment_variable import EnvironmentVariable
 
 """Environment variable to override the gcov executable"""
-GENHTML_COMMAND_ENVIRONMENT_VARIABLE = EnvironmentVariable(
-    'GCOV_COMMAND', 'The full path to the genhtml executable')
+GCOV_COMMAND_ENVIRONMENT_VARIABLE = EnvironmentVariable(
+    'GCOV_COMMAND', 'The full path to the gcov executable')
+"""Environment variable to override the lcov executable"""
+LCOV_COMMAND_ENVIRONMENT_VARIABLE = EnvironmentVariable(
+    'LCOV_COMMAND', 'The full path to the lcov executable')
 
 
 def which_executable(environment_variable, executable_name):
@@ -27,5 +30,5 @@ def which_executable(environment_variable, executable_name):
     return shutil.which(executable_name)
 
 
-CPP_FILT_EXECUTABLE = shutil.which('c++filt')
-GENHTML_EXECUTABLE = which_executable(GENHTML_COMMAND_ENVIRONMENT_VARIABLE.name, 'genhtml')
+GCOV_EXECUTABLE = which_executable(GCOV_COMMAND_ENVIRONMENT_VARIABLE.name, 'gcov')
+LCOV_EXECUTABLE = which_executable(LCOV_COMMAND_ENVIRONMENT_VARIABLE.name, 'lcov')
