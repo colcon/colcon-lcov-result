@@ -2,22 +2,23 @@ colcon-lcov-result
 ==================
 
 An extension for `colcon-core <https://github.com/colcon/colcon-core>`_ to provide aggregate
-coverage results using [LCOV](http://ltp.sourceforge.net/coverage/lcov.php).
+coverage results using `LCOV <http://ltp.sourceforge.net/coverage/lcov.php>`_.
 
 LCOV is a graphical front-end for GCC's coverage testing tool
-[gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html)), producing the following
+`gcov <https://gcc.gnu.org/onlinedocs/gcc/Gcov.html>`_, producing the following
 coverage metrics:
 
 - Statement coverage
 - Function coverage
 - Branch coverage
 
-For more information, see [this paper](http://ltp.sourceforge.net/documentation/technical_papers/gcov-ols2003.pdf)
-and [this Wikipedia page](https://en.wikipedia.org/wiki/Code_coverage).
+For more information, see `this paper
+<http://ltp.sourceforge.net/documentation/technical_papers/gcov-ols2003.pdf>`_
+and `this Wikipedia page <https://en.wikipedia.org/wiki/Code_coverage>`_.
 
 
 Usage
-==================
+=====
 #. Build your packages with coverage flags, using ``colcon``:
 
    .. code-block:: shell
@@ -76,7 +77,7 @@ Usage
 
 
 Tips and Tricks
-==================
+===============
 
 * When running locally, use the ``--packages-select`` option to generate
   coverage information for relevant packages
@@ -89,7 +90,7 @@ Tips and Tricks
 
 
 Troubleshooting
-==================
+===============
 
 * The following warning when running ``colcon lcov-result --initial`` implies
   that the package was not built with the correct flags:
@@ -119,7 +120,7 @@ Troubleshooting
 
 
 Known Issues
-=================
+============
 
-#. The final step of agreggating all the result files can be slow depending
+#. The final step of aggregating all the result files can be slow depending
    on the number of packages that were analyzed
