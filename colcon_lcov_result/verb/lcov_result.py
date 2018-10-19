@@ -25,6 +25,7 @@ from colcon_core.verb import check_and_mark_build_tool
 from ..task.lcov import LcovCaptureTask
 from ..task.lcov import LcovZeroCountersTask
 from ..task.lcov import lcov_add
+from ..task.lcov import lcov_remove
 from . import CPP_FILT_EXECUTABLE
 from . import GENHTML_EXECUTABLE
 
@@ -71,6 +72,11 @@ class LcovResultVerb(VerbExtensionPoint):
             '--zero-counters',
             action='store_true',
             help='Zero the coverage counters'
+        )
+        parser.add_argument(
+            '--filter',
+            nargs='*',
+            help='Remove files matching FILTER from total coverage (e.g. "*/test/*")'
         )
         add_packages_arguments(parser)
         add_log_level_argument(parser)
@@ -124,12 +130,17 @@ class LcovResultVerb(VerbExtensionPoint):
             if len(output_files) == 0:
                 logger.error('No valid coverage.info files found. Did you run tests?')
                 return 1
-            rc = lcov_add(context, output_files, total_output_file)
+            rc = lcov_add(context, output_files, total_output_file, verbose=context.args.verbose)
 
         if rc != 0:
             return rc
 
-        # TODO(jpsamper) Add step to filter unwanted files?
+        if context.args.filter:
+            print("\nApplying filters... ")
+            rc = lcov_remove(context, total_output_file)
+
+        if rc != 0:
+            return rc
 
         print("\nGenerating HTML: ", end='')
         # Check that genhtml exists

@@ -4,6 +4,8 @@
 import os
 import subprocess
 
+from shutil import copy2
+
 from colcon_core.logging import colcon_logger
 from colcon_core.plugin_system import satisfies_version
 from colcon_core.task import check_call
@@ -145,6 +147,30 @@ def lcov_add(context, tracefiles, output_file, verbose=True):
     for tracefile in tracefiles:
         cmd.extend(['--add-tracefile', str(tracefile)])
     cmd.extend(['--output-file', str(output_file)])
+    rc = subprocess.run(cmd, stderr=subprocess.PIPE)
+    if rc.returncode != 0:
+        logger.error(rc.stderr.decode('utf-8'))
+        return rc.returncode
+
+    if verbose:
+        rc = lcov_summary(context, output_file)
+        if rc.returncode != 0:
+            logger.error(rc.stderr.decode('utf-8'))
+        return rc.returncode
+
+    return 0
+
+
+def lcov_remove(context, output_file, verbose=True):
+    copy2(output_file, output_file + '.nofilt')  # Create backup of unfiltered total
+
+    cmd = ['lcov',
+           '--quiet',
+           '--gcov-tool', GCOV_EXECUTABLE,
+           '--config-file', str(context.args.lcov_config_file),
+           '--output-file', output_file,
+           '--remove', output_file]
+    cmd.extend(context.args.filter)
     rc = subprocess.run(cmd, stderr=subprocess.PIPE)
     if rc.returncode != 0:
         logger.error(rc.stderr.decode('utf-8'))
