@@ -89,6 +89,43 @@ Tips and Tricks
   individual package as the results are analyzed
 
 
+Contributing
+============
+
+For non-trivial contributions, it is recommended to first create an issue to discuss
+your ideas.
+
+The following is the recommended workflow for contributing:
+
+#. Install ``colcon`` and extensions in a virtual environment:
+
+   .. code-block:: shell
+
+     $ cd <workspace>
+     $ python3 -m venv colcon-env
+     $ source colcon-env/bin/activate
+     $ pip3 install colcon-common-extensions
+
+#. Install ``colcon-lcov-result`` in editable mode:
+
+   .. code-block:: shell
+
+     $ cd <workspace>
+     $ python3 -m venv colcon-env
+     $ source colcon-env/bin/activate
+     $ cd path/to/colcon-lcov-result
+     $ pip3 install -e .
+
+#. As long as you are in the virtual environment, make changes to ``colcon-lcov-result``
+   run ``colcon lcov-result``, and see the effect of the changes
+
+#. Commit changes and submit a PR:
+
+   * See `The seven rules of a great Git commit message`_
+
+.. _The seven rules of a great Git commit message: https://chris.beams.io/posts/git-commit/#seven-rules
+
+
 Troubleshooting
 ===============
 
