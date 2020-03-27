@@ -57,10 +57,11 @@ class LcovCaptureTask(TaskExtensionPoint):
         else:
             output_file = os.path.join(pkg_build_folder, 'coverage.info')
             additional_args = []
+        pkg_realpath = os.path.realpath(str(pkg.path))
 
         cmd = [LCOV_EXECUTABLE,
                '--gcov-tool', GCOV_EXECUTABLE,
-               '--base-directory', str(pkg.realpath),
+               '--base-directory', pkg_realpath,
                '--capture',
                '--directory', str(pkg_build_folder),
                '--output-file', str(output_file),
@@ -70,7 +71,7 @@ class LcovCaptureTask(TaskExtensionPoint):
         rc = await check_call(
             self.context,
             cmd,
-            cwd=str(pkg.realpath)
+            cwd=pkg_realpath
         )
 
         if rc.returncode == 0 and args.verbose:
@@ -114,10 +115,11 @@ class LcovZeroCountersTask(TaskExtensionPoint):
 
         pkg_build_folder = os.path.abspath(os.path.join(args.build_base, pkg.name))
         baseline_file = os.path.join(pkg_build_folder, 'coverage_base.info')
+        pkg_realpath = os.path.realpath(str(pkg.path))
 
         cmd = [LCOV_EXECUTABLE,
                '--gcov-tool', GCOV_EXECUTABLE,
-               '--base-directory', str(pkg.realpath),
+               '--base-directory', pkg_realpath,
                '--zerocounters',
                '--quiet',
                '--directory', str(pkg_build_folder)]
@@ -125,7 +127,7 @@ class LcovZeroCountersTask(TaskExtensionPoint):
         await check_call(
             self.context,
             cmd,
-            cwd=str(pkg.realpath)
+            cwd=pkg_realpath
         )
 
 
