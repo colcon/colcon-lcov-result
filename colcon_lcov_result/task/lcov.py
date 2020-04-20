@@ -8,7 +8,7 @@ from shutil import copy2
 
 from colcon_core.logging import colcon_logger
 from colcon_core.plugin_system import satisfies_version
-from colcon_core.task import check_call
+from colcon_core.task import run
 from colcon_core.task import TaskExtensionPoint
 from . import GCOV_EXECUTABLE
 from . import LCOV_EXECUTABLE
@@ -68,7 +68,7 @@ class LcovCaptureTask(TaskExtensionPoint):
                '--config-file', str(self.context.args.lcov_config_file)]
         cmd.extend(additional_args)
 
-        rc = await check_call(
+        rc = await run(
             self.context,
             cmd,
             cwd=pkg_realpath
@@ -124,7 +124,7 @@ class LcovZeroCountersTask(TaskExtensionPoint):
                '--quiet',
                '--directory', str(pkg_build_folder)]
 
-        await check_call(
+        await run(
             self.context,
             cmd,
             cwd=pkg_realpath
