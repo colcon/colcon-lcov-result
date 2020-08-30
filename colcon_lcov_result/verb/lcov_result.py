@@ -65,7 +65,7 @@ class LcovResultVerb(VerbExtensionPoint):
         parser.add_argument(
             '--initial',
             action='store_true',
-            help='Generate baseline (zero) coverage. This option is meant to be used before'
+            help='Generate baseline (zero) coverage. This option is meant to be used before '
                  'running `colcon test`'
         )
         parser.add_argument(
