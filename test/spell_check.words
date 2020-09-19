@@ -13,4 +13,5 @@ rtype
 stderr
 stdout
 str
+tracefile
 tracefiles

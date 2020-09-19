@@ -1,11 +1,10 @@
 # Copyright 2018 Apex.AI, Inc.
 # Licensed under the Apache License, Version 2.0
 
-import os
-import subprocess
-
 from collections import OrderedDict
+import os
 from pathlib import Path
+import subprocess
 
 from colcon_core.command import add_log_level_argument
 from colcon_core.event_handler import add_event_handler_arguments
@@ -13,35 +12,34 @@ from colcon_core.executor import add_executor_arguments
 from colcon_core.executor import execute_jobs
 from colcon_core.executor import Job
 from colcon_core.logging import colcon_logger
-from colcon_core.plugin_system import satisfies_version
 from colcon_core.package_selection import add_arguments \
     as add_packages_arguments
 from colcon_core.package_selection import get_package_descriptors
 from colcon_core.package_selection import select_package_decorators
+from colcon_core.plugin_system import satisfies_version
 from colcon_core.task import TaskContext
 from colcon_core.topological_order import topological_order_packages
-from colcon_core.verb import VerbExtensionPoint
 from colcon_core.verb import check_and_mark_build_tool
-from ..task.lcov import LcovCaptureTask
-from ..task.lcov import LcovZeroCountersTask
-from ..task.lcov import lcov_add
-from ..task.lcov import lcov_remove
+from colcon_core.verb import VerbExtensionPoint
+
 from . import CPP_FILT_EXECUTABLE
 from . import GENHTML_EXECUTABLE
+from ..task.lcov import lcov_add
+from ..task.lcov import lcov_remove
+from ..task.lcov import LcovCaptureTask
+from ..task.lcov import LcovZeroCountersTask
 
 logger = colcon_logger.getChild(__name__)
 
 
 class LcovResultVerb(VerbExtensionPoint):
-    """
-    Collect the lcov results generated from running tests
-    """
+    """Collect the lcov results generated from running tests."""
 
-    def __init__(self):
+    def __init__(self):  # noqa: D107
         super().__init__()
         satisfies_version(VerbExtensionPoint.EXTENSION_POINT_VERSION, '^1.0')
 
-    def add_arguments(self, *, parser):
+    def add_arguments(self, *, parser):  # noqa: D102
         parser.add_argument(
             '--build-base',
             default='build',
@@ -83,7 +81,7 @@ class LcovResultVerb(VerbExtensionPoint):
         add_executor_arguments(parser)
         add_event_handler_arguments(parser)
 
-    def main(self, *, context):
+    def main(self, *, context):  # noqa: D102
         check_and_mark_build_tool(context.args.build_base)
 
         lcov_base_abspath = Path(os.path.abspath(context.args.lcov_base))
@@ -118,7 +116,7 @@ class LcovResultVerb(VerbExtensionPoint):
         if context.args.initial or context.args.zero_counters:
             return rc
 
-        print("\nCalculating total coverage... ")
+        print('\nCalculating total coverage... ')
         total_output_file = str(lcov_base_abspath / 'total_coverage.info')
         if rc == 0:
             output_files = []
@@ -136,13 +134,13 @@ class LcovResultVerb(VerbExtensionPoint):
             return rc
 
         if context.args.filter:
-            print("\nApplying filters... ")
+            print('\nApplying filters... ')
             rc = lcov_remove(context, total_output_file)
 
         if rc != 0:
             return rc
 
-        print("\nGenerating HTML: ", end='')
+        print('\nGenerating HTML: ', end='')
         # Check that genhtml exists
         if GENHTML_EXECUTABLE is None:
             raise RuntimeError("Could not find 'genhtml' executable")
@@ -159,7 +157,7 @@ class LcovResultVerb(VerbExtensionPoint):
         for path in context.args.base_paths:
             cmd.extend(['--prefix', str(os.path.abspath(path))])
         rc = subprocess.run(cmd).returncode
-        print("Done")
+        print('Done')
         return rc
 
     @staticmethod
@@ -182,6 +180,6 @@ class LcovResultVerb(VerbExtensionPoint):
             if pkg.type in ['ros.ament_cmake', 'ros.cmake', 'cmake']:
                 gcc_pkgs.append(pkg)
             else:
-                logger.info("Specified package {} is not a gcc package. Not "
-                            "collecting coverage".format(pkg.name))
+                logger.info('Specified package {} is not a gcc package. Not '
+                            'collecting coverage'.format(pkg.name))
         return gcc_pkgs
