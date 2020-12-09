@@ -177,7 +177,7 @@ class LcovResultVerb(VerbExtensionPoint):
             if not decorator.selected:
                 continue
             pkg = decorator.descriptor
-            if pkg.type in ['ros.ament_cmake', 'ros.cmake', 'cmake']:
+            if pkg.type in ['ros.ament_cmake', 'ros.catkin', 'ros.cmake', 'cmake']:
                 gcc_pkgs.append(pkg)
             else:
                 logger.info('Specified package {} is not a gcc package. Not '
