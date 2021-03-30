@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - master
+  schedule:
+    # Run automatically every day
+    - cron: "0 0 * * *"
 
 jobs:
   test:
