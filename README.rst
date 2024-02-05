@@ -161,3 +161,8 @@ Known Issues
 
 #. The final step of aggregating all the result files can be slow depending
    on the number of packages that were analyzed
+
+Developing
+==========
+
+See `DEVELOPING.md <DEVELOPING.md>`_.
