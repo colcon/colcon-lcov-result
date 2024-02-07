@@ -1,0 +1,10 @@
+name: Run tests
+
+on:
+  push:
+    branches: ['master']
+  pull_request:
+
+jobs:
+  pytest:
+    uses: colcon/ci/.github/workflows/pytest.yaml@main
