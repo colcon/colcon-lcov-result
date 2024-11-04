@@ -76,6 +76,12 @@ class LcovResultVerb(VerbExtensionPoint):
             nargs='*',
             help='Remove files matching FILTER from total coverage (e.g. "*/test/*")'
         )
+        parser.add_argument(
+            '--lcov-args',
+            nargs='*',
+            help='Additional arguments to pass to lcov'
+        )
+
         add_packages_arguments(parser)
         add_log_level_argument(parser)
         add_executor_arguments(parser)

@@ -71,6 +71,8 @@ class LcovCaptureTask(TaskExtensionPoint):
                '--output-file', str(output_file),
                '--config-file', str(self.context.args.lcov_config_file)]
         cmd.extend(additional_args)
+        if args.lcov_args:
+            cmd.extend(args.lcov_args)
 
         rc = await run(
             self.context,
