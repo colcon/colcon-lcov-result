@@ -57,7 +57,7 @@ class LcovCaptureTask(TaskExtensionPoint):
         if args.initial:
             output_file = baseline_file
             additional_args = ['--initial',
-                               '--rc', 'lcov_branch_coverage=0']
+                               '--rc', 'branch_coverage=0']
         else:
             output_file = os.path.join(pkg_build_folder, 'coverage.info')
             additional_args = []
